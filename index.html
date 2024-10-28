@@ -30,6 +30,7 @@
   </div>
   
   <button class="btn btn-primary" onclick="calculateBatteryPercentage()">Calculate Battery Percentage</button>
+  <button class="btn btn-secondary" onclick="clearFields()">Clear</button>
 
   <div id="result" class="result-box mt-4 text-center">
     <h4>Battery Percentage:</h4>
@@ -39,15 +40,17 @@
 
 <script>
   function calculateBatteryPercentage() {
-    // Get input values
     const designCapacity = parseFloat(document.getElementById('designCapacity').value);
     const fullCapacity = parseFloat(document.getElementById('fullCapacity').value);
 
-    // Calculate battery percentage
     const batteryPercentage = ((fullCapacity / designCapacity) * 100).toFixed(2);
-
-    // Display result
     document.getElementById('batteryPercentage').innerText = batteryPercentage + ' %';
+  }
+
+  function clearFields() {
+    document.getElementById('designCapacity').value = '';
+    document.getElementById('fullCapacity').value = '';
+    document.getElementById('batteryPercentage').innerText = '-';
   }
 </script>
 
