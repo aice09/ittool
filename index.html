@@ -35,6 +35,8 @@
   <div id="result" class="result-box mt-4 text-center">
     <h4>Battery Percentage:</h4>
     <p id="batteryPercentage" class="display-4">-</p>
+    <h5>Recommendation:</h5>
+    <p id="recommendation">-</p>
   </div>
 </div>
 
@@ -43,14 +45,29 @@
     const designCapacity = parseFloat(document.getElementById('designCapacity').value);
     const fullCapacity = parseFloat(document.getElementById('fullCapacity').value);
 
+    // Calculate battery percentage
     const batteryPercentage = ((fullCapacity / designCapacity) * 100).toFixed(2);
     document.getElementById('batteryPercentage').innerText = batteryPercentage + ' %';
+
+    // Provide a recommendation based on battery health
+    let recommendation;
+    if (batteryPercentage >= 80) {
+      recommendation = "Battery health is good. Your laptop battery is performing optimally.";
+    } else if (batteryPercentage >= 50 && batteryPercentage < 80) {
+      recommendation = "Battery health is moderate. Consider replacing the battery soon for optimal performance.";
+    } else {
+      recommendation = "Battery health is low. It's recommended to replace the battery or look for a new laptop.";
+    }
+
+    // Display recommendation
+    document.getElementById('recommendation').innerText = recommendation;
   }
 
   function clearFields() {
     document.getElementById('designCapacity').value = '';
     document.getElementById('fullCapacity').value = '';
     document.getElementById('batteryPercentage').innerText = '-';
+    document.getElementById('recommendation').innerText = '-';
   }
 </script>
 
