@@ -21,15 +21,15 @@
   
   <div class="form-group mt-4">
     <label for="designCapacity">Design Capacity (in mWh):</label>
-    <input type="number" id="designCapacity" class="form-control" placeholder="Enter design capacity" value="61834">
+    <input type="number" id="designCapacity" class="form-control" placeholder="Enter design capacity" value="61834" oninput="toggleCalculateButton()">
   </div>
   
   <div class="form-group">
     <label for="fullCapacity">Full Charge Capacity (in mWh):</label>
-    <input type="number" id="fullCapacity" class="form-control" placeholder="Enter full charge capacity" value="33774">
+    <input type="number" id="fullCapacity" class="form-control" placeholder="Enter full charge capacity" value="33774" oninput="toggleCalculateButton()">
   </div>
   
-  <button class="btn btn-primary" onclick="calculateBatteryPercentage()">Calculate Battery Percentage</button>
+  <button id="calculateButton" class="btn btn-primary" onclick="calculateBatteryPercentage()" disabled>Calculate Battery Percentage</button>
   <button class="btn btn-secondary" onclick="clearFields()">Clear</button>
 
   <div id="result" class="result-box mt-4 text-center">
@@ -41,6 +41,14 @@
 </div>
 
 <script>
+  function toggleCalculateButton() {
+    const designCapacity = document.getElementById('designCapacity').value;
+    const fullCapacity = document.getElementById('fullCapacity').value;
+
+    // Enable the calculate button only if both fields have values
+    document.getElementById('calculateButton').disabled = !(designCapacity && fullCapacity);
+  }
+
   function calculateBatteryPercentage() {
     const designCapacity = parseFloat(document.getElementById('designCapacity').value);
     const fullCapacity = parseFloat(document.getElementById('fullCapacity').value);
@@ -49,14 +57,14 @@
     const batteryPercentage = ((fullCapacity / designCapacity) * 100).toFixed(2);
     document.getElementById('batteryPercentage').innerText = batteryPercentage + ' %';
 
-    // Provide a recommendation based on battery health
+    // Provide a recommendation based on updated battery health guidelines
     let recommendation;
     if (batteryPercentage >= 80) {
-      recommendation = "Battery health is good. Your laptop battery is performing optimally.";
+      recommendation = "Battery health is optimal. No replacement is necessary.";
     } else if (batteryPercentage >= 50 && batteryPercentage < 80) {
-      recommendation = "Battery health is moderate. Consider replacing the battery soon for optimal performance.";
+      recommendation = "Battery health is moderate. Consider a replacement for critical use.";
     } else {
-      recommendation = "Battery health is low. It's recommended to replace the battery or look for a new laptop.";
+      recommendation = "Battery health is low. It's advised to replace the battery soon or consider a new laptop.";
     }
 
     // Display recommendation
@@ -68,6 +76,7 @@
     document.getElementById('fullCapacity').value = '';
     document.getElementById('batteryPercentage').innerText = '-';
     document.getElementById('recommendation').innerText = '-';
+    document.getElementById('calculateButton').disabled = true;
   }
 </script>
 
