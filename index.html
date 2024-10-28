@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battery Capacity Calculator</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .result-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="text-center mt-5">Battery Capacity Calculator</h1>
+  
+  <div class="form-group mt-4">
+    <label for="designCapacity">Design Capacity (in mWh):</label>
+    <input type="number" id="designCapacity" class="form-control" placeholder="Enter design capacity" value="61834">
+  </div>
+  
+  <div class="form-group">
+    <label for="fullCapacity">Full Charge Capacity (in mWh):</label>
+    <input type="number" id="fullCapacity" class="form-control" placeholder="Enter full charge capacity" value="33774">
+  </div>
+  
+  <button class="btn btn-primary" onclick="calculateBatteryPercentage()">Calculate Battery Percentage</button>
+
+  <div id="result" class="result-box mt-4 text-center">
+    <h4>Battery Percentage:</h4>
+    <p id="batteryPercentage" class="display-4">-</p>
+  </div>
+</div>
+
+<script>
+  function calculateBatteryPercentage() {
+    // Get input values
+    const designCapacity = parseFloat(document.getElementById('designCapacity').value);
+    const fullCapacity = parseFloat(document.getElementById('fullCapacity').value);
+
+    // Calculate battery percentage
+    const batteryPercentage = ((fullCapacity / designCapacity) * 100).toFixed(2);
+
+    // Display result
+    document.getElementById('batteryPercentage').innerText = batteryPercentage + ' %';
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
