@@ -12,6 +12,11 @@
       margin-top: 20px;
       border-radius: 8px;
     }
+    .info-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #007bff;
+    }
   </style>
 </head>
 <body>
@@ -33,10 +38,34 @@
   <button class="btn btn-secondary" onclick="clearFields()">Clear</button>
 
   <div id="result" class="result-box mt-4 text-center">
-    <h4>Battery Percentage:</h4>
+    <h4>Battery Percentage:
+      <span class="info-icon" data-toggle="modal" data-target="#infoModal">&#9432;</span>
+    </h4>
     <p id="batteryPercentage" class="display-4">-</p>
     <h5>Recommendation:</h5>
     <p id="recommendation">-</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel">Battery Health Standards</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Manufacturers' Guidelines:</strong> Companies like Apple and Dell recommend battery replacement when full charge capacity drops below 80%, as efficiency decreases after several hundred cycles.</p>
+        <p><strong>General Industry Practice:</strong> Service centers typically advise replacing batteries around 50% health, especially if long battery life is essential.</p>
+        <p><strong>IEEE Standards:</strong> Standards like IEEE 1625 cover battery safety and lifecycle but don’t set specific replacement thresholds.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -44,20 +73,15 @@
   function toggleCalculateButton() {
     const designCapacity = document.getElementById('designCapacity').value;
     const fullCapacity = document.getElementById('fullCapacity').value;
-
-    // Enable the calculate button only if both fields have values
     document.getElementById('calculateButton').disabled = !(designCapacity && fullCapacity);
   }
 
   function calculateBatteryPercentage() {
     const designCapacity = parseFloat(document.getElementById('designCapacity').value);
     const fullCapacity = parseFloat(document.getElementById('fullCapacity').value);
-
-    // Calculate battery percentage
     const batteryPercentage = ((fullCapacity / designCapacity) * 100).toFixed(2);
     document.getElementById('batteryPercentage').innerText = batteryPercentage + ' %';
 
-    // Provide a recommendation based on updated battery health guidelines
     let recommendation;
     if (batteryPercentage >= 80) {
       recommendation = "Battery health is optimal. No replacement is necessary.";
@@ -66,8 +90,6 @@
     } else {
       recommendation = "Battery health is low. It's advised to replace the battery soon or consider a new laptop.";
     }
-
-    // Display recommendation
     document.getElementById('recommendation').innerText = recommendation;
   }
 
